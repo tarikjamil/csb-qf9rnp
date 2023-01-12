@@ -1,0 +1,17 @@
+.article-el:nth-child(7n + 1) {
+  grid-column: span 2;
+}
+
+.article-el:nth-child(7n) {
+  grid-column: span 2;
+}
+
+@media screen and (max-width: 991px) {
+  .article-el:nth-child(7n + 1) {
+    grid-column: span 1;
+  }
+
+  .article-el:nth-child(7n) {
+    grid-column: span 1;
+  }
+}

@@ -1,0 +1,32 @@
+/*width*/
+::-webkit-scrollbar {
+  background: transparent;
+  width: 10px;
+  height: 10px;
+  mix-blend-mode: difference;
+}
+/*track*/
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  position: fixed;
+  width: 0px;
+  margin-right: 10px;
+}
+/*thumb*/
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-width: 10px;
+  border-style: solid;
+  right: 10px;
+  position: fixed;
+  border-radius: 100px;
+}
+
+body {
+  overflow: overlay;
+}
+
+.navbar-menu::-webkit-scrollbar {
+  display: none;
+}
+/* template for elementor*/
