@@ -34,4 +34,9 @@ body {
 .navbar-menu::-webkit-scrollbar {
   display: none;
 }
+
+.richtext-article figure {
+  width: 100%;
+  max-width: none;
+}
 /* template for elementor*/
