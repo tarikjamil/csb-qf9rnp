@@ -1,6 +1,6 @@
-/*again again */
-
-/*width*/
+.main-wrapper {
+  opacity: 0;
+}
 ::-webkit-scrollbar {
   background: transparent;
   width: 10px;
