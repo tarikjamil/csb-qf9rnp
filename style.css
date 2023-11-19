@@ -40,4 +40,14 @@ body {
   width: 100%;
   max-width: none;
 }
-/* template for elementor*/
+
+@media screen and (max-width: 991px) {
+  .backgroundred .richtext-article a,
+  .backgroundblack .richtext-article a {
+    color: var(--orange);
+  }
+
+  .padding-modified {
+    padding-bottom: 0rem;
+  }
+}
