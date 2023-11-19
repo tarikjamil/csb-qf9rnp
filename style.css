@@ -41,6 +41,11 @@ body {
   max-width: none;
 }
 
+.w-richtext figure.w-richtext-align-fullwidth > div {
+  padding-bottom: inherit;
+  display: block;
+}
+
 @media screen and (max-width: 991px) {
   .backgroundred .richtext-article a,
   .backgroundblack .richtext-article a {
