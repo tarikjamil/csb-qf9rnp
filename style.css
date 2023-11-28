@@ -46,6 +46,18 @@ body {
   display: block;
 }
 
+.w-editor-edit-fade-in .main-wrapper {
+  opacity: 1;
+}
+
+.weglot-container {
+  display: none !important;
+}
+
+.wf-17o1b5s {
+  font-size: 14px !important;
+}
+
 @media screen and (max-width: 991px) {
   .backgroundred .richtext-article a,
   .backgroundblack .richtext-article a {
