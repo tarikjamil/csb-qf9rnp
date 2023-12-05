@@ -10,21 +10,21 @@ document.addEventListener("DOMContentLoaded", function () {
         // Tablet
         perPage: 1,
         gap: "24rem",
-        arrows: false
+        arrows: false,
       },
       767: {
         // Mobile Landscape
         perPage: 1,
         gap: "24rem",
-        arrows: false
+        arrows: false,
       },
       479: {
         // Mobile Portrait
         perPage: 1,
         gap: "24rem",
-        arrows: false
-      }
-    }
+        arrows: false,
+      },
+    },
   });
   splide.mount();
 });
