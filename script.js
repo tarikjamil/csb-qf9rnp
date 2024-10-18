@@ -137,22 +137,6 @@ document.querySelectorAll("[animation=fade]").forEach(function (fadeElem) {
 });
 
 document
-  .querySelectorAll(".richtext-article *")
-  .forEach(function (richTextElem) {
-    gsap.from(richTextElem, {
-      scrollTrigger: {
-        trigger: richTextElem,
-        start: "top bottom-=50",
-        markers: false,
-      },
-      y: "20rem",
-      opacity: 0,
-      ease: "smooth",
-      duration: 0.6,
-    });
-  });
-
-document
   .querySelectorAll("[animation=fade-stagger]")
   .forEach(function (fadeSplitElem) {
     gsap.from(fadeSplitElem.querySelectorAll("[animation=fade-item]"), {
