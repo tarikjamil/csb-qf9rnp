@@ -2,6 +2,20 @@
   opacity: 0;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.line-animation-split {
+  overflow: hidden;
+  margin-top: -0.12em;
+}
+
+.animation-split-fade,
+.line-split-fade {
+  overflow: hidden;
+}
+
 ::-webkit-scrollbar {
   background: transparent;
   width: 10px;
@@ -32,14 +46,16 @@
   display: none;
 }
 
-.w-richtext figure {
-  width: 100%;
-  max-width: none;
+.w-richtext figure.w-richtext-align-fullwidth {
+  max-width: none !important;
 }
 
-.w-richtext figure.w-richtext-align-fullwidth > div {
-  padding-bottom: inherit;
-  display: block;
-  width: 100%;
-  max-width: none;
+.w-richtext figure.w-richtext-align-fullwidth div {
+  width: 100% !important;
+}
+
+.w-richtext figure.w-richtext-align-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
