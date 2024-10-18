@@ -8,7 +8,7 @@
 
 .line-animation-split {
   overflow: hidden;
-  margin-top: -0.12em;
+  padding: 0.1em;
 }
 
 .animation-split-fade,
