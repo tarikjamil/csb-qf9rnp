@@ -1,13 +1,64 @@
-gsap.registerPlugin(ScrollTrigger);
+// ------------------ Split ------------------ //
 
-// On Page Load
+function runSplit() {
+  text = new SplitType("[animation=loading-split]", {
+    types: "lines, chars",
+    lineClass: "line-animation-split",
+    charClass: "char-animation-split",
+  });
+  textfade = new SplitType("[animation=fade-split]", {
+    types: "lines, chars",
+    lineClass: "line-split-fade",
+    charClass: "char-split-fade",
+  });
+  textheading = new SplitType("[animation=load--heading]", {
+    types: "lines",
+    lineClass: "animation-heading-split",
+  });
+
+  textquotes = new SplitType("[animation=quote-fade]", {
+    types: "words",
+    wordClass: "quote-fade-split",
+  });
+
+  // Wrap each line in a div with class 'overflow-hidden'
+  $(".animation-heading-split").each(function () {
+    $(this).wrap("<div class='overflow-hidden'></div>");
+  });
+}
+
+runSplit();
+
+// Update on window resize
+let windowWidth = $(window).innerWidth();
+window.addEventListener("resize", function () {
+  if (windowWidth !== $(window).innerWidth()) {
+    windowWidth = $(window).innerWidth();
+    text.revert();
+    textfade.revert();
+    textheading.revert();
+    textquotes.revert();
+    runSplit();
+  }
+});
+
+// ------------------ gsap ------------------ //
+
+gsap.registerPlugin(ScrollTrigger, CustomEase);
+
+// ------------------ smooth ease ------------------ //
+
+CustomEase.create("smooth", "M0,0 C0.38,0.005 0.215,1 1,1");
+
+// ------------------ loading screen ------------------ //
+
 function pageLoad() {
   let tl = gsap.timeline();
 
   tl.to(".main-wrapper", {
     opacity: 1,
-    ease: "Quint.easeOut",
-    duration: 0.5,
+    ease: "smooth",
+    duration: 0.6,
   });
 
   // Add a label to mark the starting point of simultaneous animations
@@ -15,12 +66,36 @@ function pageLoad() {
 
   // Add the 'loading' animation and set its position to the label
   tl.from(
+    ".char-animation-split",
+    {
+      y: "-100%",
+      opacity: "0",
+      stagger: { each: 0.02, from: "start" },
+      ease: "smooth",
+      duration: 0.6,
+    },
+    "loadingAnimationsStart"
+  );
+  tl.from(
     "[animation=loading]",
     {
       y: "20rem",
       opacity: "0",
       stagger: { each: 0.1, from: "start" },
-      ease: "Quint.easeOut",
+      ease: "smooth",
+      duration: 0.6,
+    },
+    "loadingAnimationsStart"
+  ); // <-- position parameter set to the label
+
+  // Add the 'loading-reverse' animation and set its position to the label
+  tl.from(
+    "[animation=loading-reverse]",
+    {
+      y: "-20rem",
+      opacity: "0",
+      stagger: { each: 0.1, from: "start" },
+      ease: "smooth",
       duration: 1,
     },
     "loadingAnimationsStart"
@@ -29,86 +104,56 @@ function pageLoad() {
 
 pageLoad();
 
-// img parallax
-$(".img-parallax").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(this);
+// ------------------ scroll trigger ------------------ //
 
-  let tl = gsap.timeline({
+document.querySelectorAll(".line-split-fade").forEach(function (fadeSplitElem) {
+  gsap.from(fadeSplitElem.querySelectorAll(".char-split-fade"), {
     scrollTrigger: {
-      trigger: triggerElement,
-      scrub: true,
-      // trigger element - viewport
-      start: "top bottom",
-      end: "bottom top",
+      trigger: fadeSplitElem,
+      start: "bottom bottom",
+      markers: false,
     },
-  });
-  tl.to(targetElement, {
-    y: "-15%",
+    y: "-100%",
+    ease: "smooth",
+    duration: 0.6,
+    stagger: {
+      each: 0.05,
+    },
   });
 });
 
-// img parallax
-$(".hero-img").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(this);
-
-  let tl = gsap.timeline({
+document.querySelectorAll("[animation=fade]").forEach(function (fadeSplitElem) {
+  gsap.from(fadeSplitElem, {
     scrollTrigger: {
-      trigger: triggerElement,
-      scrub: true,
-      // trigger element - viewport
-      start: "top bottom",
-      end: "bottom top",
+      trigger: fadeSplitElem,
+      start: "top bottom-=50",
+      markers: false,
     },
-  });
-  tl.to(targetElement, {
-    y: "-15%",
+    y: "20rem",
+    opacity: 0,
+    ease: "smooth",
+    duration: 0.6,
   });
 });
 
-$(".img-parallax-reverse").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(this);
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: triggerElement,
-      scrub: true,
-      // trigger element - viewport
-      start: "top bottom",
-      end: "bottom top",
-    },
+document
+  .querySelectorAll("[animation=fade-stagger]")
+  .forEach(function (fadeSplitElem) {
+    gsap.from(fadeSplitElem.querySelectorAll("[animation=fade-item]"), {
+      scrollTrigger: {
+        trigger: fadeSplitElem,
+        start: "top bottom-=200",
+        markers: false,
+      },
+      y: "40rem",
+      opacity: 0,
+      ease: "smooth",
+      duration: 0.6,
+      stagger: {
+        each: 0.1,
+      },
+    });
   });
-  tl.to(targetElement, {
-    y: "15%",
-  });
-});
-
-// text parallax
-$(".text-parallax").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(this);
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: triggerElement,
-      scrub: true,
-      // trigger element - viewport
-      start: "top bottom",
-      end: "bottom top",
-    },
-  });
-  tl.fromTo(
-    targetElement,
-    {
-      x: "15%",
-    },
-    {
-      x: "-15%",
-    }
-  );
-});
 
 //torro parallax
 $(".torro-circle").each(function (index) {
@@ -135,178 +180,6 @@ $(".torro-circle").each(function (index) {
   );
 });
 
-//shape parallax
-$(".parallax-animation-2").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(this);
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: triggerElement,
-      scrub: true,
-      // trigger element - viewport
-      start: "top bottom",
-      end: "bottom top",
-    },
-  });
-  tl.fromTo(
-    targetElement,
-    {
-      y: "32rem",
-    },
-    {
-      y: "-32rem",
-    }
-  );
-});
-
-$(".parallax-animation").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(this);
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: triggerElement,
-      scrub: true,
-      // trigger element - viewport
-      start: "top bottom",
-      end: "bottom top",
-    },
-  });
-  tl.fromTo(
-    targetElement,
-    {
-      y: "-32rem",
-    },
-    {
-      y: "+32rem",
-    }
-  );
-});
-
-// navbar menu hamburger click
-$(".menu-link").click(function () {
-  let clicks = $(this).data("clicks");
-  if (clicks) {
-    // odd clicks
-    gsap.to(".is--navbar-load", {
-      y: "10rem",
-      duration: 0.2,
-      opacity: 0,
-      ease: "Quint.easeOut",
-      stagger: {
-        each: 0.1,
-        from: "end",
-      },
-    });
-  } else {
-    // even clicks
-    gsap.fromTo(
-      ".is--navbar-load",
-      {
-        y: "10rem",
-        opacity: 0,
-      },
-      {
-        duration: 0.5,
-        delay: 0.4,
-        y: "0rem",
-        opacity: 1,
-        ease: "Quint.easeOut",
-        stagger: {
-          each: 0.1,
-        },
-      }
-    );
-  }
-  $(this).data("clicks", !clicks);
-});
-
-// navbar menu hamburger click
-$(".dropdown-parent").click(function () {
-  let clicks = $(this).data("clicks");
-  if (clicks) {
-    // odd clicks
-    gsap.to(".dropdown-link", {
-      y: "10rem",
-      duration: 0.2,
-      opacity: 0,
-      ease: "Quint.easeOut",
-      stagger: {
-        each: 0.1,
-        from: "end",
-      },
-    });
-  } else {
-    // even clicks
-    gsap.fromTo(
-      ".dropdown-link",
-      {
-        y: "10rem",
-        opacity: 0,
-      },
-      {
-        duration: 0.5,
-        delay: 0.4,
-        y: "0rem",
-        opacity: 1,
-        ease: "Quint.easeOut",
-        stagger: {
-          each: 0.1,
-        },
-      }
-    );
-  }
-  $(this).data("clicks", !clicks);
-});
-
-// scroll text
-$(".scroll-animation").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(this);
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: triggerElement,
-      // trigger element - viewport
-      start: "top bottom",
-      end: "bottom top",
-    },
-  });
-  tl.from(targetElement, {
-    duration: 1,
-    delay: 0.3,
-    opacity: 0,
-    y: "20rem",
-    ease: "Quint.easeOut",
-  });
-});
-
-// scroll into footer
-$(".section.is--footer").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(".is--footer-text-animation");
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: triggerElement,
-      // trigger element - viewport
-      start: "top bottom",
-    },
-  });
-  tl.from(targetElement, {
-    duration: 1,
-    delay: 0.5,
-    opacity: 0,
-    y: "20rem",
-    ease: "Quint.easeOut",
-    stagger: {
-      amount: 0.2,
-      from: "0",
-    },
-  });
-});
-
 // lines-horizontal
 $(".line").each(function (index) {
   let triggerElement = $(this);
@@ -331,7 +204,7 @@ $(".line").each(function (index) {
       delay: 0.3,
       opacity: 1,
       width: "100%",
-      ease: "Quint.easeOut",
+      ease: "smooth",
       stagger: {
         amount: 0.3,
         from: "0",
@@ -340,27 +213,81 @@ $(".line").each(function (index) {
   );
 });
 
-function adjustPadding() {
-  document.querySelectorAll(".grid--2els").forEach(function (el) {
-    if (el.parentElement.classList.contains("padding")) {
-      el.parentElement.classList.add("padding-modified");
-    } else {
-      el.parentElement.classList.remove("padding-modified");
-    }
-  });
-}
+// ------------------ Menu -------------------- //
 
-// Run on page load
-adjustPadding();
+// navbar menu hamburger click
 
-// Run on window resize
-window.addEventListener("resize", function () {
-  if (window.innerWidth <= 991) {
-    adjustPadding();
-  } else {
-    // Remove the class if the screen is wider than 991px
-    document.querySelectorAll(".padding-modified").forEach(function (el) {
-      el.classList.remove("padding-modified");
+$(".menu-link").click(function () {
+  let clicks = $(this).data("clicks");
+  if (clicks) {
+    // odd clicks
+    gsap.to(".is--navbar-load", {
+      y: "10rem",
+      duration: 0.2,
+      opacity: 0,
+      ease: "smooth",
+      stagger: {
+        each: 0.1,
+        from: "end",
+      },
     });
+  } else {
+    // even clicks
+    gsap.fromTo(
+      ".is--navbar-load",
+      {
+        y: "10rem",
+        opacity: 0,
+      },
+      {
+        duration: 0.5,
+        delay: 0.4,
+        y: "0rem",
+        opacity: 1,
+        ease: "smooth",
+        stagger: {
+          each: 0.1,
+        },
+      }
+    );
   }
+  $(this).data("clicks", !clicks);
+});
+
+// navbar menu hamburger click
+$(".dropdown-parent").click(function () {
+  let clicks = $(this).data("clicks");
+  if (clicks) {
+    // odd clicks
+    gsap.to(".dropdown-link", {
+      y: "10rem",
+      duration: 0.2,
+      opacity: 0,
+      ease: "smooth",
+      stagger: {
+        each: 0.1,
+        from: "end",
+      },
+    });
+  } else {
+    // even clicks
+    gsap.fromTo(
+      ".dropdown-link",
+      {
+        y: "10rem",
+        opacity: 0,
+      },
+      {
+        duration: 0.5,
+        delay: 0.4,
+        y: "0rem",
+        opacity: 1,
+        ease: "smooth",
+        stagger: {
+          each: 0.1,
+        },
+      }
+    );
+  }
+  $(this).data("clicks", !clicks);
 });
