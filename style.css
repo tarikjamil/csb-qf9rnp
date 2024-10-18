@@ -11,6 +11,10 @@
   padding: 0.1em;
 }
 
+[animation="loading-split"] {
+  padding: 0em !important;
+}
+
 .animation-split-fade,
 .line-split-fade {
   overflow: hidden;
