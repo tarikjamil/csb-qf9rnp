@@ -67,3 +67,11 @@
 .navbar.is--scrolled .navbar--bg {
   opacity: 1;
 }
+
+.faq--question.open .faq--icon {
+  transform: rotate(45deg);
+}
+
+.faq--response {
+  height: 0px;
+}
