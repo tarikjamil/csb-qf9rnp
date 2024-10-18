@@ -122,12 +122,26 @@ document.querySelectorAll(".line-split-fade").forEach(function (fadeSplitElem) {
   });
 });
 
+document.querySelectorAll("[animation=fade]").forEach(function (fadeElem) {
+  gsap.from(fadeElem, {
+    scrollTrigger: {
+      trigger: fadeElem,
+      start: "top bottom-=50",
+      markers: false,
+    },
+    y: "20rem",
+    opacity: 0,
+    ease: "smooth",
+    duration: 0.6,
+  });
+});
+
 document
-  .querySelectorAll(".richtext-article [animation=fade]")
-  .forEach(function (fadeSplitElem) {
-    gsap.from(fadeSplitElem, {
+  .querySelectorAll(".richtext-article *")
+  .forEach(function (richTextElem) {
+    gsap.from(richTextElem, {
       scrollTrigger: {
-        trigger: fadeSplitElem,
+        trigger: richTextElem,
         start: "top bottom-=50",
         markers: false,
       },
