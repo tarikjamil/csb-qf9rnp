@@ -206,7 +206,7 @@ $(".torro-circle").each((index, element) => {
     .fromTo(
       targetElement,
       {
-        scale: 0.7,
+        scale: 0.5,
         opacity: 0,
       },
       {
