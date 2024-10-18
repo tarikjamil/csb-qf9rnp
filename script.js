@@ -155,29 +155,48 @@ document
     });
   });
 
-//torro parallax
-$(".torro-circle").each(function (index) {
-  let triggerElement = $(this);
-  let targetElement = $(this);
-
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: triggerElement,
-      scrub: true,
-      // trigger element - viewport
-      start: "top bottom",
-      end: "bottom top",
-    },
+document
+  .querySelectorAll("[animation=quote-fade]")
+  .forEach(function (fadeSplitElem) {
+    gsap.from(fadeSplitElem.querySelectorAll(".quote-fade-split"), {
+      scrollTrigger: {
+        trigger: fadeSplitElem,
+        start: "top center+=100",
+        end: "bottom center+=100",
+        markers: false,
+        scrub: true,
+      },
+      opacity: "0.1",
+      stagger: {
+        each: 0.05,
+      },
+    });
   });
-  tl.fromTo(
-    targetElement,
-    {
-      scale: 0.7,
-    },
-    {
-      scale: 1.3,
-    }
-  );
+
+//torro parallax
+$(".torro-circle").each((index, element) => {
+  let triggerElement = $(element);
+  let targetElement = $(".torro-wrapper"); // Change target to .torro-wrapper
+
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: triggerElement,
+        scrub: true,
+        start: "top bottom", // Animation starts when the element enters the viewport
+        end: "bottom top", // Animation ends when the element leaves the viewport
+      },
+    })
+    .fromTo(
+      targetElement,
+      {
+        scale: 0.7,
+      },
+      {
+        scale: 1.3,
+        ease: "power1.inOut", // Smoother animation
+      }
+    );
 });
 
 // lines-horizontal
