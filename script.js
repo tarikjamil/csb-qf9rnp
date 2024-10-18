@@ -207,10 +207,11 @@ $(".torro-circle").each((index, element) => {
       targetElement,
       {
         scale: 0.7,
+        opacity: 0,
       },
       {
         scale: 1.3,
-        ease: "power1.inOut", // Smoother animation
+        opacity: 1,
       }
     );
 });
