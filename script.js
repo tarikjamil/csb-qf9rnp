@@ -191,8 +191,8 @@ document
 
 //torro parallax
 $(".torro-circle").each((index, element) => {
-  let triggerElement = $(element);
-  let targetElement = $(".torro-wrapper"); // Change target to .torro-wrapper
+  let triggerElement = $(".torro-wrapper");
+  let targetElement = $(element); // Change target to .torro-wrapper
 
   gsap
     .timeline({
