@@ -327,3 +327,16 @@ $(".dropdown-parent").click(function () {
   }
   $(this).data("clicks", !clicks);
 });
+
+// navbar color
+$(document).ready(function () {
+  var scrollTop = 0;
+  $(window).scroll(function () {
+    scrollTop = $(window).scrollTop();
+    if (scrollTop >= 50) {
+      $(".navbar").addClass("is--scrolled");
+    } else if (scrollTop < 50) {
+      $(".navbar").removeClass("is--scrolled");
+    }
+  });
+});
